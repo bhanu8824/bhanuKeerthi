@@ -1,38 +1,83 @@
-.App {
-  text-align: center;
+@import 'animate.css';
+
+body, html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  background: linear-gradient(135deg, #6fb1fc, #d8eafd);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-container {
+  /* text-align: center; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.section {
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 2rem;
+  background-image: url('https://i.pinimg.com/564x/27/12/f8/2712f8a406c6d05495e7f84eaf517995.jpg');
+  background-size: cover;
+
 }
 
-.App-link {
-  color: #61dafb;
+.intro {
+  /* background: linear-gradient(to bottom right, #74c0fc, #e3f2fd); */
+  /* color: #003366; */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ring-text {
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #0056b3;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.photo-section {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  background: linear-gradient(135deg, #6fb1fc, #d8eafd);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+.photo-section1 {
+  background-image: url('https://res.cloudinary.com/ddyogx5yr/image/upload/v1744453561/IMG_4238_z4qspr.jpg');
+  height: 100vh;
+  background-size: cover;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  /* background-color: white; */
+  /* color: #fff; */
+  /* font-family: 'Segoe UI', sans-serif; */
+}
+.scroll-btn {
+  font-weight: bold;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.heading{
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: rgb(9, 9, 9);
+}
+.ring-image{
+  width: 250px;
+  border-radius: 15px;
+
+}
+.buttonScrol{
+  height: 20px;
+  /* width: 180px; */
+  font-size: 16px;
 }
