@@ -1,26 +1,113 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaHeart } from "react-icons/fa";
+import { motion } from 'framer-motion';
 
 function App() {
+  useEffect(() => {
+    const audio = document.getElementById('bg-music');
+    const playAudio = () => {
+      audio.play().catch((e) => {
+        console.log("Autoplay blocked. Waiting for user interaction.");
+      });
+    };
+
+    playAudio();
+  }, []);
   return (
     <div className="main-container">
-      <section className="section">
-        <h1 className="mb-0 heading">We Got ENGAGED!</h1>
-        <img src="ring.png" alt="ring" className='ring-image mb-0' />
-        <a href="#photo" className="buttonScrol">Scroll to See the Moment ↓</a>
-      </section>
+      <motion.section 
+        className="section"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.h1 
+          className="mb-0 heading"
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          We Got ENGAGED!
+        </motion.h1>
 
-      <section id="photo" className="section photo-section d-flex flex-column justify-content-center align-items-center text-center">
-      <p className="text-white mt-3">BHANU</p>
-      <p className="text-white mt-3">KEERTHI</p>
-      <p className="text-white mt-3">A special Chapter of my life began...and I can't wait to share it with you all!</p>
-        <img src="photo.jpeg" alt="Engagement" className="img-fluid rounded-4 shadow-lg mb-3" style={{ maxWidth: '90%', maxHeight: '500px' }} />
-      </section>  
+        <motion.img 
+          src="ring.png" 
+          alt="ring" 
+          className='ring-image mb-0'
+          initial={{ rotate: -15, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 3 }}
+        />
 
-      <section id="photo" className="photo-section1 d-flex flex-column justify-content-center align-items-center">
-        {/* <img src="photo.jpeg" alt="Engagement" className="img-fluid rounded-4 shadow-lg mb-3" style={{ maxWidth: '90%', maxHeight: '500px' }} /> */}
-      </section>
+
+        <div className='mb-3'>
+          <audio id="bg-music" src="/love.mp3" autoPlay loop />
+          playing song
+        </div>
+
+        <motion.a 
+          href="#photo" 
+          className="buttonScrol"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Scroll to See the Moment ↓
+        </motion.a>
+      </motion.section>
+
+      <motion.section 
+        id="photo"
+        className="section photo-section d-flex flex-column justify-content-center align-items-center text-center"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <motion.p className="names" whileHover={{ scale: 1.4 }}>BHANU</motion.p>
+
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500 }}
+        >
+          <FaHeart color='red' fontSize='35px' fontWeight='bold' />
+        </motion.div>
+
+        <motion.p className="names" whileHover={{ scale: 1.1 }}>KEERTHI</motion.p>
+
+        <motion.p 
+          className="paragraph mb-5"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          A special Chapter of my life began...and I can't wait to share it with you all!
+        </motion.p>
+
+        <motion.img 
+          src="ghibili3.png" 
+          alt="Engagement" 
+          className="img-fluid rounded-4 shadow-lg mb-3"
+          style={{ maxWidth: '100%', maxHeight: '400px' }}
+          whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        />
+      </motion.section>
+        <motion.section
+        id="photo"
+        className="photo-section1 d-flex flex-column justify-content-center align-items-center"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 2 }}
+        >
+      {/* Optional: You can add content here */}
+    </motion.section>
+    
     </div>
   );
 }

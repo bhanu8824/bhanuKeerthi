@@ -1,4 +1,10 @@
 @import 'animate.css';
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.cursive-text {
+  font-family: 'Pacifico', cursive;
+}
+
 
 body, html {
   margin: 0;
@@ -9,9 +15,7 @@ body, html {
   font-family: 'Segoe UI', sans-serif;
 }
 
-.main-container {
-  /* text-align: center; */
-}
+
 
 .section {
   height: 100vh;
@@ -25,10 +29,7 @@ body, html {
 
 }
 
-.intro {
-  /* background: linear-gradient(to bottom right, #74c0fc, #e3f2fd); */
-  /* color: #003366; */
-}
+
 
 .ring-text {
   font-weight: bold;
@@ -47,15 +48,13 @@ body, html {
 }
 .photo-section1 {
   background-image: url('https://res.cloudinary.com/ddyogx5yr/image/upload/v1744453561/IMG_4238_z4qspr.jpg');
-  height: 100vh;
+  height: 75vh;
   background-size: cover;
   width: 100%;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
-  /* background-color: white; */
-  /* color: #fff; */
-  /* font-family: 'Segoe UI', sans-serif; */
+  background-color: white;
+  border-radius: 12px;
 }
 .scroll-btn {
   font-weight: bold;
@@ -72,7 +71,7 @@ body, html {
   color: rgb(9, 9, 9);
 }
 .ring-image{
-  width: 250px;
+  width: 350px;
   border-radius: 15px;
 
 }
@@ -80,4 +79,19 @@ body, html {
   height: 20px;
   /* width: 180px; */
   font-size: 16px;
+}
+.names{
+  font-family: Cursive;
+  font-size: 44px;
+  font-weight: bold;
+  color: rgb(2, 50, 57);
+}
+.paragraph{
+  font-family: 'Pacifico', cursive;
+  font-size: 20px;
+  color: rgb(2, 50, 57);
+  text-align: center;
+  margin-top: 10px;
+  width: 70%;
+  letter-spacing: 2px;
 }
