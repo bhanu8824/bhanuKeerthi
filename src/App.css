@@ -33,7 +33,7 @@ body, html {
 
 .ring-text {
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: #0056b3;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
@@ -48,7 +48,7 @@ body, html {
 }
 .photo-section1 {
   background-image: url('https://res.cloudinary.com/ddyogx5yr/image/upload/v1744453561/IMG_4238_z4qspr.jpg');
-  height: 75vh;
+  height: 70vh;
   background-size: cover;
   width: 100%;
   margin: 0;
@@ -67,11 +67,11 @@ body, html {
 .heading{
   font-family: 'Times New Roman', Times, serif;
   font-size: 36px;
-  font-weight: 500;
+  font-weight: 600;
   color: rgb(9, 9, 9);
 }
 .ring-image{
-  width: 350px;
+  width: 300px;
   border-radius: 15px;
 
 }
@@ -92,6 +92,6 @@ body, html {
   color: rgb(2, 50, 57);
   text-align: center;
   margin-top: 10px;
-  width: 70%;
+  width: 85%;
   letter-spacing: 2px;
 }

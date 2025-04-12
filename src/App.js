@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaHeart } from "react-icons/fa";
 import { motion } from 'framer-motion';
 
 function App() {
-  useEffect(() => {
-    const audio = document.getElementById('bg-music');
-    const playAudio = () => {
-      audio.play().catch((e) => {
-        console.log("Autoplay blocked. Waiting for user interaction.");
-      });
-    };
+  // useEffect(() => {
+  //   const audio = document.getElementById('bg-music');
+  //   const playAudio = () => {
+  //     audio.play().catch((e) => {
+  //       console.log("Autoplay blocked. Waiting for user interaction.");
+  //     });
+  //   };
 
-    playAudio();
-  }, []);
+  //   playAudio();
+  // }, []);
   return (
     <div className="main-container">
       <motion.section 
@@ -42,10 +42,10 @@ function App() {
         />
 
 
-        <div className='mb-3'>
+        {/* <div className='mb-3'>
           <audio id="bg-music" src="/love.mp3" autoPlay loop />
-          playing song
-        </div>
+          
+        </div> */}
 
         <motion.a 
           href="#photo" 
