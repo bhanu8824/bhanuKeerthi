@@ -131,7 +131,6 @@ function App() {
       </motion.section>
       <motion.section
         id="photo"
-        ref={photoRef}
         className="photo-section1 d-flex flex-column justify-content-center align-items-center"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
