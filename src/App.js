@@ -145,9 +145,7 @@ function App() {
               <circle cx="18" cy="16" r="3" />
             </svg>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
+            <svg xmlns="http://www.w3.org/2000/svg"width="30"
               height="30"
               viewBox="0 0 24 24"
               fill="none"
@@ -155,10 +153,8 @@ function App() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="music-icon"
-            >
-              <path d="M9 18V5l12-2v13" />
-              <line x1="3" y1="3" x2="21" y2="21" />
+              className="music-icon">
+              <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z" />
             </svg>
           )}
         </motion.div>
