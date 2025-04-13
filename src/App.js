@@ -7,41 +7,67 @@ import { motion } from "framer-motion";
 function App() {
   const photoRef = useRef(null);
   const musicRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false); 
+  const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {
-  const timeout = setTimeout(() => {
-    photoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, 2000); // delay in ms before auto-scroll
+    const scrollToRefSlowly = () => {
+      const target = photoRef.current;
+      if (!target) return;
 
-  return () => clearTimeout(timeout);
-}, []);
-// Track play/pause state
+      const targetY = target.getBoundingClientRect().top + window.scrollY;
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      const duration = 4000; // scroll duration in ms
+      let startTime = null;
 
-  useEffect(() => {
-    // IntersectionObserver to trigger audio play when photo section is in view
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isPlaying) {
-          const audio = musicRef.current;
-          audio?.play().catch((error) => {
-            console.error("Autoplay blocked:", error);
-          });
-          setIsPlaying(true); // Update state to reflect that music is playing
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = timestamp - startTime;
+        const percent = Math.min(progress / duration, 1);
+
+        window.scrollTo(0, startY + distance * easeInOutQuad(percent));
+
+        if (percent < 1) {
+          requestAnimationFrame(step);
         }
-      },
-      { threshold: 0.5 } // Trigger when 50% of the section is in view
-    );
+      };
 
-    if (photoRef.current) {
-      observer.observe(photoRef.current); // Start observing the photo section
-    }
-
-    return () => {
-      if (photoRef.current) {
-        observer.unobserve(photoRef.current); // Clean up observer
-      }
+      requestAnimationFrame(step);
     };
-  }, [isPlaying]); // Ensure play logic is only triggered once
+
+    const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+
+    const timeout = setTimeout(() => {
+      scrollToRefSlowly();
+    }, 2000); // delay before scroll starts
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // useEffect(() => {
+  //   // IntersectionObserver to trigger audio play when photo section is in view
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting && !isPlaying) {
+  //         const audio = musicRef.current;
+  //         // audio?.play().catch((error) => {
+  //         //   console.error("Autoplay blocked:", error);
+  //         // });
+  //         setIsPlaying(true); // Update state to reflect that music is playing
+  //       }
+  //     },
+  //     { threshold: 0.5 } // Trigger when 50% of the section is in view
+  //   );
+
+  //   if (photoRef.current) {
+  //     observer.observe(photoRef.current); // Start observing the photo section
+  //   }
+
+  //   return () => {
+  //     if (photoRef.current) {
+  //       observer.unobserve(photoRef.current); // Clean up observer
+  //     }
+  //   };
+  // }, [isPlaying]); // Ensure play logic is only triggered once
 
   const toggleMusic = () => {
     const audio = musicRef.current;
@@ -63,43 +89,6 @@ function App() {
       <audio id="bg-music" ref={musicRef} src="/audio.mp3" loop />
 
       {/* Music control button */}
-      {/* <div className="music-control" onClick={toggleMusic}>
-        {isPlaying ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            width="30"
-            height="30"
-            className="pause-icon"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19V6M14 19V6"
-            />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            width="30"
-            height="30"
-            className="play-icon"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 4v16l12-8-12-8z"
-            />
-          </svg>
-        )}
-      </div> */}
 
       <motion.section
         className="section"
@@ -124,14 +113,55 @@ function App() {
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 3 }}
         />
-        <motion.a
+        {/* <motion.a
           href="#photo"
           className="buttonScrol"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Scroll to See the Moment ↓
-        </motion.a>
+        </motion.a> */}
+        <motion.div
+          className={`music-control-alt ${isPlaying ? "pulsing" : ""}`}
+          onClick={toggleMusic}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isPlaying ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="music-icon"
+            >
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="music-icon"
+            >
+              <path d="M9 18V5l12-2v13" />
+              <line x1="3" y1="3" x2="21" y2="21" />
+            </svg>
+          )}
+        </motion.div>
       </motion.section>
 
       <motion.section
