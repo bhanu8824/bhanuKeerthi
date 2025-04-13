@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 
 function App() {
   const photoRef = useRef(null);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       photoRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -15,8 +14,42 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+
+  useEffect(() => {
+    // Function to play the audio
+    const playAudio = () => {
+      const audio = document.getElementById("bg-music");
+      if (audio) {
+        audio.play().catch((error) => {
+          console.error("Autoplay blocked:", error);
+        });
+      }
+    };
+
+    // Try to play immediately
+    playAudio();
+
+    // Listen for any user interaction to play the audio if autoplay is blocked
+    const handleUserInteraction = () => {
+      playAudio();
+      window.removeEventListener("click", handleUserInteraction);
+      window.removeEventListener("keydown", handleUserInteraction);
+    };
+
+    // Set up the event listeners to allow user interaction if autoplay is blocked
+    window.addEventListener("click", handleUserInteraction);
+    window.addEventListener("keydown", handleUserInteraction);
+
+    return () => {
+      window.removeEventListener("click", handleUserInteraction);
+      window.removeEventListener("keydown", handleUserInteraction);
+    };
+  }, []);
+
   return (
-    <div className="main-container">
+    <div className="main-container" >
+      <audio id="bg-music" src="/audio.mp3" loop />
+
       <motion.section
         className="section"
         initial={{ opacity: 0, y: -50 }}
@@ -51,7 +84,7 @@ function App() {
       </motion.section>
 
       <motion.section
-      ref={photoRef}
+        ref={photoRef}
         id="photo"
         className="section photo-section d-flex flex-column justify-content-center align-items-center text-center"
         initial={{ opacity: 0 }}
@@ -85,8 +118,6 @@ function App() {
           you all!
         </motion.p>
 
-        <audio id="bg-music" src="/audio.mps.wav" autoPlay loop />
-
         <motion.img
           src="ghibili3.png"
           alt="Engagement"
@@ -100,6 +131,7 @@ function App() {
       </motion.section>
       <motion.section
         id="photo"
+        ref={photoRef}
         className="photo-section1 d-flex flex-column justify-content-center align-items-center"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}

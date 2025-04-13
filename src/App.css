@@ -94,9 +94,9 @@ html {
   width: 85%;
   letter-spacing: 2px;
 }
-audio {
+/* audio {
   display: none;
-}
+} */
 
 @media (max-width: 600px) {
   .heading {
