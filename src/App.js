@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaHeart } from "react-icons/fa";
@@ -6,49 +6,100 @@ import { motion } from "framer-motion";
 
 function App() {
   const photoRef = useRef(null);
+  const musicRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false); 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      photoRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 2000);
+  const timeout = setTimeout(() => {
+    photoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 2000); // delay in ms before auto-scroll
 
-    return () => clearTimeout(timer);
-  }, []);
-
+  return () => clearTimeout(timeout);
+}, []);
+// Track play/pause state
 
   useEffect(() => {
-    // Function to play the audio
-    const playAudio = () => {
-      const audio = document.getElementById("bg-music");
-      if (audio) {
+    // IntersectionObserver to trigger audio play when photo section is in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isPlaying) {
+          const audio = musicRef.current;
+          audio?.play().catch((error) => {
+            console.error("Autoplay blocked:", error);
+          });
+          setIsPlaying(true); // Update state to reflect that music is playing
+        }
+      },
+      { threshold: 0.5 } // Trigger when 50% of the section is in view
+    );
+
+    if (photoRef.current) {
+      observer.observe(photoRef.current); // Start observing the photo section
+    }
+
+    return () => {
+      if (photoRef.current) {
+        observer.unobserve(photoRef.current); // Clean up observer
+      }
+    };
+  }, [isPlaying]); // Ensure play logic is only triggered once
+
+  const toggleMusic = () => {
+    const audio = musicRef.current;
+    if (audio) {
+      if (isPlaying) {
+        audio.pause(); // Pause the audio if it's playing
+        setIsPlaying(false); // Set music to paused state
+      } else {
         audio.play().catch((error) => {
           console.error("Autoplay blocked:", error);
         });
+        setIsPlaying(true); // Set music to playing state
       }
-    };
-
-    // Try to play immediately
-    playAudio();
-
-    // Listen for any user interaction to play the audio if autoplay is blocked
-    const handleUserInteraction = () => {
-      playAudio();
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("keydown", handleUserInteraction);
-    };
-
-    // Set up the event listeners to allow user interaction if autoplay is blocked
-    window.addEventListener("click", handleUserInteraction);
-    window.addEventListener("keydown", handleUserInteraction);
-
-    return () => {
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("keydown", handleUserInteraction);
-    };
-  }, []);
+    }
+  };
 
   return (
-    <div className="main-container" >
-      <audio id="bg-music" src="/audio.mp3" loop />
+    <div className="main-container">
+      <audio id="bg-music" ref={musicRef} src="/audio.mp3" loop />
+
+      {/* Music control button */}
+      {/* <div className="music-control" onClick={toggleMusic}>
+        {isPlaying ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            width="30"
+            height="30"
+            className="pause-icon"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19V6M14 19V6"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            width="30"
+            height="30"
+            className="play-icon"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 4v16l12-8-12-8z"
+            />
+          </svg>
+        )}
+      </div> */}
 
       <motion.section
         className="section"
@@ -84,7 +135,7 @@ function App() {
       </motion.section>
 
       <motion.section
-        ref={photoRef}
+        // ref={photoRef}
         id="photo"
         className="section photo-section d-flex flex-column justify-content-center align-items-center text-center"
         initial={{ opacity: 0 }}
@@ -131,6 +182,7 @@ function App() {
       </motion.section>
       <motion.section
         id="photo"
+        ref={photoRef}
         className="photo-section1 d-flex flex-column justify-content-center align-items-center"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}

@@ -98,6 +98,37 @@ html {
   display: none;
 } */
 
+.music-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.2s;
+}
+
+.music-control:hover {
+  transform: scale(1.1);
+}
+
+.play-icon {
+  fill: #28a745;
+  /* Green for playing */
+}
+
+.pause-icon {
+  fill: white;
+  /* White for pause */
+}
+
+.heart-icon {
+  fill: red;
+  /* Heart color */
+}
+
 @media (max-width: 600px) {
   .heading {
     font-size: 28px;
